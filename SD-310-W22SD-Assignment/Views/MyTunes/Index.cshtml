@@ -1,0 +1,11 @@
+﻿@using SD_310_W22SD_Assignment.Models.ViewModels
+@model UserSelectViewModel
+
+<h1>Select a User</h1>
+
+<form asp-action="Songs">
+    <select name="userId" asp-items="@Model.UserSelectItems"></select>
+    <button type="submit">Select</button>
+</form>
+
+<h3>Collection</h3>

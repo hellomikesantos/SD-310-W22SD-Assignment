@@ -1,0 +1,33 @@
+﻿@model IEnumerable<SD_310_W22SD_Assignment.Models.Song>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Artist)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach(Song song in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => song.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => song.Artist.Name)
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+
+
+
+
