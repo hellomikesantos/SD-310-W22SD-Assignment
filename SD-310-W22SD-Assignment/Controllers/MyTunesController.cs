@@ -28,8 +28,21 @@ namespace SD_310_W22SD_Assignment.Controllers
             {
                 try
                 {
-                    List<Song> songs = _db.Songs.Where(s => s.UserId == userId).ToList();
-                    return View(songs);
+                    List<Song> songs = _db.Songs.Where(s => s.UserId == userId).Include(s => s.Artist).ToList();
+                    UserSelectViewModel userselect = new UserSelectViewModel(_db.Users.
+                        Include(u => u.Songs).ToList(),
+                        songs);
+                    userselect.Selected = true;
+                    userselect.Artists = new List<Artist>();
+
+                    foreach(User user in _db.Users)
+                    {
+                        if(user.Id == userId)
+                        {
+                            userselect.SelectedUser = user;
+                        }
+                    }
+                    return View("SelectUser", userselect);
                 }
                 catch
                 {
