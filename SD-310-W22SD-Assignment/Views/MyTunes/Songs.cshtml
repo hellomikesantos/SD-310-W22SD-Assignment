@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<SD_310_W22SD_Assignment.Models.Song>
 
-
+<h3>Collection</h3>
 <table class="table">
     <thead>
         <tr>
@@ -20,7 +20,7 @@
                 @Html.DisplayFor(modelItem => song.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => song.Artist.Name)
+                @Html.DisplayFor(modelItem => song.ArtistId)
             </td>
         </tr>
     }

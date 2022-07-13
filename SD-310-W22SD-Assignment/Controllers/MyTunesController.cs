@@ -16,7 +16,7 @@ namespace SD_310_W22SD_Assignment.Controllers
         {
             return View(_db.Songs.Include(u => u.Users));
         }
-        public IActionResult Index()
+        public IActionResult SelectUser()
         {
             UserSelectViewModel userselect = new UserSelectViewModel(_db.Users.Include(u => u.Songs).ToList(),
                 _db.Songs.ToList());
@@ -40,7 +40,13 @@ namespace SD_310_W22SD_Assignment.Controllers
             {
                 return View("Index", "Home");
             }
-            
+        }
+
+        public IActionResult SelectArtist()
+        {
+            ArtistSelectViewModel artistselect = new ArtistSelectViewModel(_db.Artists.ToList(),
+                _db.Songs.ToList());
+            return View(artistselect);
         }
 
         public IActionResult Artists()
