@@ -1,0 +1,44 @@
+﻿@using SD_310_W22SD_Assignment.Models.ViewModels
+@model UserSelectViewModel
+
+<h1>Select a User to to add song to</h1>
+
+<form asp-action="AllSongs">
+    <select name="userId" asp-items="@Model.UserSelectItems"></select>
+    <button type="submit">Select</button>
+</form>
+
+@if (Model.Selected)
+{
+    <h4>All Songs</h4>
+    <h5>Pick a song</h5>
+    <table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Songs.First().Title )
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Songs.First().Artist)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Songs) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Artist.Name)
+                </td>
+                <td>
+                    <button><a asp-action="AddToCollection" asp-route-userId="@Model.SelectedUser.Id",
+                    asp-route-songId="@item.Id">Add to Collection</a></button>
+                </td>
+            </tr>
+    }
+    </tbody>
+    </table>
+}
+

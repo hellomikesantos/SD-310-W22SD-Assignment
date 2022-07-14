@@ -8,4 +8,36 @@
     <button type="submit">Select</button>
 </form>
 
-    
+
+@if(Model.Selected)
+{
+    <h3>@Model.SelectedUser.UserName Collection</h3>
+    <table class="table">
+        <thead>
+            <tr>   
+                <th>
+                    @Html.DisplayNameFor(item => item.Songs.First().Artist)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(item => item.Songs.First().Title)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        @*@foreach(Artist artist in Model.Artists)*@
+        @foreach(Song song in Model.SelectedUser.Songs)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => song.Artist.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => song.Title)
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+<h3><a asp-action="SelectUserToAddSongs">All Songs</a></h3>
