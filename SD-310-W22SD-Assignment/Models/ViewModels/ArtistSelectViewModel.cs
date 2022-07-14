@@ -6,8 +6,9 @@ namespace SD_310_W22SD_Assignment.Models.ViewModels
     {
             public List<SelectListItem> ArtistSelectItems { get; set; }
             public List<Artist> Artists { get; set; }
-            public List<Song> Songs { get; set; }
-            public ArtistSelectViewModel(List<Artist> artists, List<Song> songs)
+            public bool Selected { get; set; } = false;
+            public Artist SelectedArtist { get; set; }
+            public ArtistSelectViewModel(List<Artist> artists)
             {
                 Artists = artists;
 
@@ -16,8 +17,6 @@ namespace SD_310_W22SD_Assignment.Models.ViewModels
                 {
                     ArtistSelectItems.Add(new SelectListItem(a.Name, a.Id.ToString()));
                 });
-
-                Songs = songs;
             }
     }
 }

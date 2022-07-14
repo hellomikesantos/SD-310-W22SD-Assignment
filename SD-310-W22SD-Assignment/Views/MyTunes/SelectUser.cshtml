@@ -1,7 +1,7 @@
 ﻿@using SD_310_W22SD_Assignment.Models.ViewModels
 @model UserSelectViewModel
 
-<h1>Select a User</h1>
+<h1>Select a User to See Collection</h1>
 
 <form asp-action="Songs">
     <select name="userId" asp-items="@Model.UserSelectItems"></select>
@@ -24,7 +24,6 @@
             </tr>
         </thead>
         <tbody>
-        @*@foreach(Artist artist in Model.Artists)*@
         @foreach(Song song in Model.SelectedUser.Songs)
         {
             <tr>
@@ -40,4 +39,5 @@
     </table>
 }
 
-<h3><a asp-action="SelectUserToAddSongs">All Songs</a></h3>
+<h3><a asp-action="SelectUserToAddSongs">Add Song to Collection</a></h3>
+<h3><a asp-action="SelectArtist">Songs by Artist</a></h3>

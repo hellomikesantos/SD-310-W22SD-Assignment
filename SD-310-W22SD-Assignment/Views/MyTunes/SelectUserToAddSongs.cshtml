@@ -3,7 +3,7 @@
 
 <h1>Select a User to to add song to</h1>
 
-<form asp-action="AllSongs">
+<form asp-action="Collection">
     <select name="userId" asp-items="@Model.UserSelectItems"></select>
     <button type="submit">Select</button>
 </form>
@@ -11,7 +11,7 @@
 @if (Model.Selected)
 {
     <h4>All Songs</h4>
-    <h5>Pick a song</h5>
+    <h5>Pick your songs</h5>
     <table class="table">
     <thead>
         <tr>
@@ -41,4 +41,6 @@
     </tbody>
     </table>
 }
+<h3><a asp-action="SelectUser">Collection by User</a></h3>
+<h3><a asp-action="SelectArtist">Songs by Artist</a></h3>
 

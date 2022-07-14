@@ -1,0 +1,43 @@
+﻿@using SD_310_W22SD_Assignment.Models.ViewModels
+@model ArtistSelectViewModel
+
+<h1>Select Artist to see Songs</h1>
+
+<form asp-action="Artists">
+    <select name="artistId" asp-items="@Model.ArtistSelectItems"></select>
+    <button type="submit">Select</button>
+</form>
+
+
+@if(Model.Selected)
+{
+    <h3>@Model.SelectedArtist.Name Songs</h3>
+    <table class="table">
+        <thead>
+            <tr>   
+                <th>
+                    @Html.DisplayNameFor(item => item.Artists.First().Songs.First().Title)
+                </th>
+                <th>
+                    Collects
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach(Song song in Model.SelectedArtist.Songs)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => song.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => song.Users.Count)
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+<h3><a asp-action="SelectUser">Collection by User</a></h3>
+<h3><a asp-action="SelectUserToAddSongs">Add Song to Collection</a></h3>
