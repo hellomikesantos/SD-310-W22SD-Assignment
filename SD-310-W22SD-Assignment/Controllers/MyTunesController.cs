@@ -62,7 +62,7 @@ namespace SD_310_W22SD_Assignment.Controllers
             return View(userselect);
         }
 
-        public IActionResult AllSongs(int? userId)
+        public IActionResult Collection(int? userId)
         {
             if (userId != null)
             {
@@ -70,7 +70,7 @@ namespace SD_310_W22SD_Assignment.Controllers
                 {
                     UserSelectViewModel userselect = new UserSelectViewModel(_db.Users.
                         Include(u => u.Songs).ToList(),
-                        _db.Songs.Include(s => s.Artist).ToList());
+                        _db.Songs.Include(s => s.Artist).OrderBy(a => a.Artist.Name).ToList());
                     userselect.Selected = true;
                     foreach (User user in _db.Users)
                     {
@@ -107,6 +107,8 @@ namespace SD_310_W22SD_Assignment.Controllers
                 if(user.Id == userId)
                 {
                     user.Songs.Add(selectedSong);
+                    selectedSong.Users.Add(user);
+
                 }
             }
             _db.SaveChanges();
@@ -115,14 +117,39 @@ namespace SD_310_W22SD_Assignment.Controllers
 
         public IActionResult SelectArtist()
         {
-            ArtistSelectViewModel artistselect = new ArtistSelectViewModel(_db.Artists.ToList(),
-                _db.Songs.ToList());
+            ArtistSelectViewModel artistselect = new ArtistSelectViewModel(_db.Artists.
+                Include(a => a.Songs).ToList());
             return View(artistselect);
         }
 
-        public IActionResult Artists()
+        public IActionResult Artists(int? artistId)
         {
-            return View(_db.Artists.ToList());
+            if (artistId != null)
+            {
+                try
+                {
+                    ArtistSelectViewModel artistSelect = new ArtistSelectViewModel(_db.Artists.
+                        Include(a => a.Songs).ThenInclude(s => s.Users).ToList());
+                    artistSelect.Selected = true;
+                    foreach (Artist artist in artistSelect.Artists)
+                    {
+                        if (artist.Id == artistId)
+                        {
+                            artistSelect.SelectedArtist = artist;
+                        }
+                    }
+                    return View("SelectArtist", artistSelect);
+
+                }
+                catch
+                {
+                    return View("Index", "Home");
+                }
+            }
+            else
+            {
+                return View("Index", "Home");
+            }
         }
     }
 }
