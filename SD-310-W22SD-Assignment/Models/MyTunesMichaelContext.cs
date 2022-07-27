@@ -17,6 +17,7 @@ namespace SD_310_W22SD_Assignment.Models
         }
 
         public virtual DbSet<Artist> Artists { get; set; } = null!;
+        public virtual DbSet<Collection> Collections { get; set; } = null!;
         public virtual DbSet<Song> Songs { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
@@ -35,9 +36,22 @@ namespace SD_310_W22SD_Assignment.Models
             {
                 entity.ToTable("Artist");
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Name).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<Collection>(entity =>
+            {
+                entity.ToTable("Collection");
+
+                entity.HasOne(d => d.Song)
+                    .WithMany(p => p.Collections)
+                    .HasForeignKey(d => d.SongId)
+                    .HasConstraintName("FK_Collection_Song");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Collections)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK_Collection_User");
             });
 
             modelBuilder.Entity<Song>(entity =>
@@ -63,11 +77,6 @@ namespace SD_310_W22SD_Assignment.Models
                 entity.ToTable("User");
 
                 entity.Property(e => e.UserName).HasMaxLength(50);
-
-                entity.HasOne(d => d.Song)
-                    .WithMany(p => p.Users)
-                    .HasForeignKey(d => d.SongId)
-                    .HasConstraintName("FK_User_Song");
             });
 
             OnModelCreatingPartial(modelBuilder);

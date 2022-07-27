@@ -14,14 +14,25 @@ namespace SD_310_W22SD_Assignment.Controllers
         }
         public IActionResult SongsUsers()
         {
-            return View(_db.Songs.Include(u => u.Users));
+            return View(_db.Songs.Include(u => u.Collections));
         }
-        public IActionResult SelectUser()
+        public IActionResult SelectUser(User user)
         {
-            UserSelectViewModel userselect = new UserSelectViewModel(_db.Users.Include(u => u.Songs).ToList(),
+            if(user != null)
+            {
+                UserSelectViewModel userselect = new UserSelectViewModel(_db.Users.Include(u => u.Songs).ToList(),
                 _db.Songs.ToList());
-            return View(userselect);
+                userselect.SelectedUser = user;
+                return View(userselect);
+            }
+            else
+            {
+                UserSelectViewModel userselect = new UserSelectViewModel(_db.Users.Include(u => u.Songs).ToList(),
+                _db.Songs.ToList());
+                return View(userselect);
+            }
         }
+            
         public IActionResult Songs(int? userId)
         {
             if(userId != null)
@@ -107,7 +118,7 @@ namespace SD_310_W22SD_Assignment.Controllers
                 if(user.Id == userId)
                 {
                     user.Songs.Add(selectedSong);
-                    selectedSong.Users.Add(user);
+                    selectedSong.Collections.Add(new Collection());
 
                 }
             }
@@ -129,7 +140,7 @@ namespace SD_310_W22SD_Assignment.Controllers
                 try
                 {
                     ArtistSelectViewModel artistSelect = new ArtistSelectViewModel(_db.Artists.
-                        Include(a => a.Songs).ThenInclude(s => s.Users).ToList());
+                        Include(a => a.Songs).ThenInclude(s => s.Collections).ToList());
                     artistSelect.Selected = true;
                     foreach (Artist artist in artistSelect.Artists)
                     {
@@ -150,6 +161,16 @@ namespace SD_310_W22SD_Assignment.Controllers
             {
                 return View("Index", "Home");
             }
+        }
+        public IActionResult AddToWallet(UserSelectViewModel userSelect)
+        {
+            //userSelect.SelectedUser.Wallet += amount;
+            return RedirectToAction("SelectUser");
+        }
+        public IActionResult GetTops()
+        {
+            TopsViewModel topsView = new TopsViewModel(_db.Artists.ToList(), _db.Songs.ToList());
+            return View(topsView);
         }
     }
 }
