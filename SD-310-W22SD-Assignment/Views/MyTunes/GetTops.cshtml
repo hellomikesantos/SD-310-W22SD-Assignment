@@ -1,0 +1,48 @@
+﻿@using SD_310_W22SD_Assignment.Models.ViewModels
+@model TopsViewModel
+
+
+    <h3>Top Selling Artists </h3>
+    <table class="table">
+        <thead>
+            <tr>   
+                <th>
+                    @Html.DisplayNameFor(item => item.TopSellingArtists)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach(Artist artist in @Model.TopSellingArtists)
+        {
+            <tr>
+                <td>
+                    Artist Name
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <h3>Top Selling Songs </h3>
+    <table class="table">
+        <thead>
+            <tr>   
+                <th>
+                    Song Title
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach(Song song in @Model.TopSellingSongs)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => song.Title)
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+<h3><a asp-action="SelectUser">Collection by User</a></h3>
+<h3><a asp-action="SelectUserToAddSongs">Add Song to Collection</a></h3>
